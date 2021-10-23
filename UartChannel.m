@@ -17,6 +17,11 @@ classdef UartChannel
         % UART Port
         port
     end
+    properties (Constant)
+        % Header used to sync bytes
+        header = 0x92384233;
+        headerBytes = [0x33, 0x42, 0x38, 0x92];
+    end
     methods
         function obj = UartChannel(portName, baudRate)
             try
@@ -46,36 +51,54 @@ classdef UartChannel
         % Read a packet from UART as specified with packet 
         function packet = read(obj, packet)
             % Sync header
-            syncHeader(obj, packet.headerBytes);
+            syncHeader(obj);
             
             % Read every field of the packet
             packet_size = length(packet.struct_map);
             buffer = zeros(1, packet_size);
-            for i = 1:packet_size - 1
-                buffer(i) = read(obj.port, 1, packet.struct_map(i + 1));
+            for i = 1:packet_size
+                buffer(i) = read(obj.port, 1, packet.struct_map(i));
             end
 
             % Return packet
-            packet = SensorPacketFromArray(packet, buffer);
+            packet = packet.fromArray(buffer);
+        end
+        
+        % write a packet onto the uart port
+        function write(obj, packet)
+            % Send header
+            sendHeader(obj);
+            
+            % Send every field of the packet
+            packet_size = length(packet.struct_map);
+            serialized = packet.toArray();
+            for i = 1:packet_size
+                write(obj.port, serialized(i),  packet.struct_map(i));
+            end
         end
 
         % Sync UART Header
-        function syncHeader(obj, headerBytes)
+        function syncHeader(obj)
             index = 1;
             while index <= 4
                 tmp = read(obj.port, 1, "uint8");
-                if tmp == headerBytes(index)
+                if tmp == obj.headerBytes(index)
                     % Match current, check next
                     index = index + 1;
-                elseif tmp == headerBytes(1)
+                elseif tmp == obj.headerBytes(1)
                     % Potential restart
                     index = 2;
                 else
                     % Reset
                     index = 1;
-                    fprintf("[!] Reset header counter\n");
+                    % fprintf("[!] Reset header counter\n");
                 end
             end
+        end
+        
+        % Send UART Synchronization header
+        function sendHeader(obj)
+            write(obj.port, obj.header, "uint32");
         end
     end
 end
