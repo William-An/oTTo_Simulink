@@ -6,6 +6,8 @@ clear;
 portName = "COM6";
 uart = UartChannel(portName, 115200);
 
+fprintf("Connecting to %s\n", portName);
+
 while true
     % Create packet instance
     receiveData = SensorPacket();
