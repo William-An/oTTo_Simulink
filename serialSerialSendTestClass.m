@@ -7,19 +7,21 @@ portName = "COM4";
 uart = UartChannel(portName, 115200);
 
 fprintf("Connecting to %s\n", portName);
-speed = 360;
+speed = 10;
+% TODO Uart receiver Only heard the first few packets after uart object
+% created, causing issue
 while true
     % Create packet instance
-    speed = mod(speed + 10, 720);
-    commanData = CommandPacket.fromParams(speed, speed, 0, 0, 100, 400);
-    uart.write(commanData);
+    speed = speed + 10;
+    commandData = CommandPacket.fromParams(speed, speed, 0, 0, 100, 400);
+    uart.write(commandData);
 
     fprintf("LeftV: %.4f, RightV: %.4f, LeftAngle: %.4f, RightAngle: %.4f, Time: %ld, CRC: %u\n", ...
-            commanData.omega_left,commanData.omega_right,... 
-            commanData.theta_left, commanData.theta_right,...
-            commanData.time, commanData.crc32);
+            commandData.omega_left,commandData.omega_right,... 
+            commandData.theta_left, commandData.theta_right,...
+            commandData.time, commandData.crc32);
     
-    dt_des = 0.1; % 100 ms
+    dt_des = 0.01; % 100 ms
     % initialize clock
     t_st = tic;
     % looping

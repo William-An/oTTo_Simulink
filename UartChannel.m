@@ -24,12 +24,7 @@ classdef UartChannel
     end
     methods
         function obj = UartChannel(portName, baudRate)
-            try
-                obj.port = serialport(portName, baudRate);
-            catch err
-                fprintf("[!] UART Failed: %s: %s\n", err.identifier, err.message);
-                waitforbuttonpress;
-            end
+            obj.port = serialport(portName, baudRate);
         end
 
         function enqueue(obj, queueName)
