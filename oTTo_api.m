@@ -148,12 +148,13 @@ omega_right = block.InputPort(2).Data;
 commandData = CommandPacket.fromParams(omega_left, omega_right, 0, 0, 100, 400);
 uart.write(commandData);
 
-receiveData = CommandPacket();
+receiveData = SensorPacket();
 receiveData = uart.read(receiveData);
+flush(uart.port);
 
-block.OutputPort(1).Data = receiveData.omega_left;
-block.OutputPort(2).Data = receiveData.omega_left;
-block.OutputPort(3).Data = receiveData.omega_right;
+block.OutputPort(1).Data = receiveData.yaw;
+block.OutputPort(2).Data = receiveData.pitch;
+block.OutputPort(3).Data = receiveData.roll;
 
 %end Outputs function
 

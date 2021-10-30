@@ -24,7 +24,7 @@ classdef UartChannel
     end
     methods
         function obj = UartChannel(portName, baudRate)
-            obj.port = serialport(portName, baudRate);
+            obj.port = serialport(portName, baudRate, "Parity","even");
         end
 
         function enqueue(obj, queueName)

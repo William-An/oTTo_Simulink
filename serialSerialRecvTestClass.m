@@ -3,7 +3,7 @@
 clear;
 
 % Initialize UART Port
-portName = "COM4";
+portName = "COM7";
 uart = UartChannel(portName, 115200);
 
 fprintf("Connecting to %s\n", portName);
