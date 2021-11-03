@@ -1,4 +1,4 @@
-function oTTo_api(block)
+function oTTo_send(block)
 %MSFUNTMPL A Template for a MATLAB S-Function
 %   The MATLAB S-function is written as a MATLAB function with the
 %   same name as the S-function. Replace 'msfuntmpl' with the name
@@ -148,13 +148,13 @@ omega_right = block.InputPort(2).Data;
 commandData = CommandPacket.fromParams(omega_left, omega_right, 0, 0, 100, 400);
 uart.write(commandData);
 
-receiveData = SensorPacket();
-receiveData = uart.read(receiveData);
-flush(uart.port);
+% receiveData = SensorPacket();
+% receiveData = uart.read(receiveData);
+% flush(uart.port);
 
-block.OutputPort(1).Data = receiveData.yaw;
-block.OutputPort(2).Data = receiveData.pitch;
-block.OutputPort(3).Data = receiveData.roll;
+block.OutputPort(1).Data = 0;
+block.OutputPort(2).Data = 0;
+block.OutputPort(3).Data = 0;
 
 %end Outputs function
 

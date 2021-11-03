@@ -3,20 +3,22 @@
 clear;
 
 % Initialize UART Port
-portName = "COM7";
-uart = UartChannel(portName, 115200);
+portName = "COM4";
+uart = UartChannel(portName, 460800);
 
 fprintf("Connecting to %s\n", portName);
-speed = 10;
+speed = 0;
 % TODO Uart receiver Only heard the first few packets after uart object
 % created, causing issue
+kp = 20;
 while true
     % Create packet instance
-    speed = mod(speed + 10, 360);
+    speed = mod(speed + 10, 720);
     receiveData = SensorPacket();
     receiveData = uart.read(receiveData);
     flush(uart.port);
 
+    speed = -kp * receiveData.pitch;
     commandData = CommandPacket.fromParams(speed, speed, 0, 0, 100, 400);
     uart.write(commandData);
 
