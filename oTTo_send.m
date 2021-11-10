@@ -36,7 +36,7 @@ function setup(block)
   % left_omega, right_omega
   block.NumInputPorts  = 2;
   % Pitch, roll, yaw
-  block.NumOutputPorts = 3;
+  block.NumOutputPorts = 0;
   
   % Set up the port properties to be inherited or dynamic.
   block.SetPreCompInpPortInfoToDynamic;
@@ -118,9 +118,9 @@ function CheckPrms(block)
 function SetInpPortFrameData(block, idx, fd)
   
   block.InputPort(idx).SamplingMode = fd;
-  block.OutputPort(1).SamplingMode  = fd;
-  block.OutputPort(2).SamplingMode  = fd;
-  block.OutputPort(3).SamplingMode  = fd;
+%   block.OutputPort(1).SamplingMode  = fd;
+%   block.OutputPort(2).SamplingMode  = fd;
+%   block.OutputPort(3).SamplingMode  = fd;
   
 %endfunction
 
@@ -152,9 +152,9 @@ uart.write(commandData);
 % receiveData = uart.read(receiveData);
 % flush(uart.port);
 
-block.OutputPort(1).Data = 0;
-block.OutputPort(2).Data = 0;
-block.OutputPort(3).Data = 0;
+% block.OutputPort(1).Data = 0;
+% block.OutputPort(2).Data = 0;
+% block.OutputPort(3).Data = 0;
 
 %end Outputs function
 
