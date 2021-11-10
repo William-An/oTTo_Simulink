@@ -144,8 +144,6 @@ function Start(block)
 function Outputs(block)
 
 uart = block.DialogPrm(3).Data;
-omega_left = block.InputPort(1).Data;
-omega_right = block.InputPort(2).Data;
 
 % commandData = CommandPacket.fromParams(omega_left, omega_right, 0, 0, 100, 400);
 % uart.write(commandData);
@@ -153,7 +151,9 @@ omega_right = block.InputPort(2).Data;
 receiveData = SensorPacket();
 receiveData = uart.read(receiveData);
 
-flush(uart.port);
+if uart.port.NumBytesAvailable > 512
+    flush(uart.port);
+end
 
 block.OutputPort(1).Data = receiveData.yaw;
 block.OutputPort(2).Data = receiveData.pitch;
