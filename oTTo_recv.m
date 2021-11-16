@@ -148,8 +148,11 @@ uart = block.DialogPrm(3).Data;
 % commandData = CommandPacket.fromParams(omega_left, omega_right, 0, 0, 100, 400);
 % uart.write(commandData);
 
+tic
 receiveData = SensorPacket();
 receiveData = uart.read(receiveData);
+fprintf("Finish receiving after %f secs\nBytes available: %d\n", toc, uart.port.NumBytesAvailable);
+
 
 if uart.port.NumBytesAvailable > 512
     flush(uart.port);

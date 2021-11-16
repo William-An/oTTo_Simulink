@@ -146,7 +146,11 @@ omega_left = block.InputPort(1).Data;
 omega_right = block.InputPort(2).Data;
 
 commandData = CommandPacket.fromParams(omega_left, omega_right, 0, 0, 100, 400);
+tic
+fprintf("Ready to write\n");
 uart.write(commandData);
+fprintf("Finish write after: %f sec\n", toc);
+
 
 % receiveData = SensorPacket();
 % receiveData = uart.read(receiveData);
