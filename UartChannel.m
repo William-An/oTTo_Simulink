@@ -75,20 +75,42 @@ classdef UartChannel
         % Sync UART Header
         function syncHeader(obj)
             index = 1;
+            % TODO Better handling?
+            % Read in batch?
+            miss_count = 0;
             while index <= 4
                 tmp = read(obj.port, 1, "uint8");
                 if tmp == obj.headerBytes(index)
                     % Match current, check next
                     index = index + 1;
+                    miss_count = miss_count + 1;
                 elseif tmp == obj.headerBytes(1)
                     % Potential restart
                     index = 2;
+                    fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
+                    miss_count = 0;
                 else
                     % Reset
                     index = 1;
-                    % fprintf("[!] Reset header counter\n");
+                    fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
+                    miss_count = 0;
                 end
             end
+
+%             buf = zeros(1, 4);
+%             bufTmp = zeros(1, 3);
+%             while true
+%                 tmp = read(obj.port, 1, "uint8");
+%                 if length(tmp) ~= 1
+%                     continue;
+%                 end
+%                 buf = buf(2:end);
+%                 buf(end + 1) = tmp;
+%                 x = typecast(uint8(buf), "uint32");
+%                 if x == obj.header
+%                     break;
+%                 end
+%             end
         end
         
         % Send UART Synchronization header

@@ -1,14 +1,14 @@
 %% Sensor packet class
 classdef SensorPacket < Packet
     properties
-        omega_left  {mustBeNumeric}
-        omega_right {mustBeNumeric}
-        theta_left  {mustBeNumeric}
-        theta_right {mustBeNumeric}
-        yaw         {mustBeNumeric}
-        pitch       {mustBeNumeric}
-        roll        {mustBeNumeric}
-        time        {mustBeNumeric}
+        omega_left  {mustBeNumeric, mustBeFloat}
+        omega_right {mustBeNumeric, mustBeFloat}
+        theta_left  {mustBeNumeric, mustBeFloat}
+        theta_right {mustBeNumeric, mustBeFloat}
+        yaw         {mustBeNumeric, mustBeFloat}
+        pitch       {mustBeNumeric, mustBeFloat}
+        roll        {mustBeNumeric, mustBeFloat}
+        time        {mustBeNumeric, mustBeFloat}
         crc32
         struct_map  = [ "single",   % LeftAngularVelo
                         "single",	% RightAngularVelo
