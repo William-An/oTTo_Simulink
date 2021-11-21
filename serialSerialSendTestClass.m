@@ -1,11 +1,11 @@
 %% otto serial send write/read test
 %  Only test sending to ESP32
 clear;
-
-% Initialize UART Port
-portName = "COM7";
+% 
+% % Initialize UART Port
+portName = "COM8";
 uart = UartChannel(portName, 115200);
-uart.port.Timeout = 0.01;
+uart.port.Timeout = 1;
 
 fprintf("Connecting to %s\n", portName);
 speed = 0;
