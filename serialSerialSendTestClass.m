@@ -3,7 +3,8 @@
 clear;
 % 
 % % Initialize UART Port
-portName = "COM8";
+% portName = "COM8";
+portName = "/dev/cu.usbserial-0001";
 uart = UartChannel(portName, 115200);
 uart.port.Timeout = 1;
 
@@ -12,19 +13,19 @@ speed = 0;
 flush(uart.port);
 % TODO Uart receiver Only heard the first few packets after uart object
 % created, causing issue
-kp = 20;
+kp = 5;
 t = 0;
 while true
     % Create packet instance
-    speed = mod(speed + 10, 720);
+%     speed = mod(speed + 10, 720);
     receiveData = SensorPacket();
     receiveData = uart.read(receiveData);
     if uart.port.NumBytesAvailable > 512
-    %     fprintf("Flushing uart with %d bytes\n", uart.port.NumBytesAvailable);
+%         fprintf("Flushing uart with %d bytes\n", uart.port.NumBytesAvailable);
         flush(uart.port, "input");
     end
 
-    speed = -kp * receiveData.pitch;
+    speed = -kp * receiveData.roll;
     commandData = CommandPacket.fromParams(speed, speed, 0, 0, 100, 400);
     uart.write(commandData);
 
