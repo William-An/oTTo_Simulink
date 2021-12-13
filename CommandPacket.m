@@ -11,7 +11,7 @@ classdef CommandPacket < Packet
                         "single",	% RightAngularVelo
                         "single",   % angleRotatedLeftMotor
                         "single",   % angleRotatedRightMotor
-                        "uint64",   % timestamp
+                        "uint32",   % timestamp
                         "uint32"];  % CRC
     end
     

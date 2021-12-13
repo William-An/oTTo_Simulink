@@ -3,8 +3,8 @@
 clear;
 % 
 % % Initialize UART Port
-portName = "COM8";
-uart = UartChannel(portName, 115200);
+portName = "COM4";
+uart = UartChannel(portName, 115200*4);
 uart.port.Timeout = 1;
 
 fprintf("Connecting to %s\n", portName);
@@ -24,7 +24,7 @@ while true
         flush(uart.port, "input");
     end
 
-    speed = -kp * receiveData.pitch;
+    speed = -kp * receiveData.roll;
     commandData = CommandPacket.fromParams(speed, speed, 0, 0, 100, 400);
     uart.write(commandData);
 

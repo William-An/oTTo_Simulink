@@ -17,7 +17,7 @@ classdef SensorPacket < Packet
                         "single",   % yaw
                         "single",   % pitch
                         "single",   % roll
-                        "uint64",   % timestamp
+                        "uint32",   % timestamp
                         "uint32"];  % CRC
     end
     
