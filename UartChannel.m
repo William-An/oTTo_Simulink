@@ -87,12 +87,12 @@ classdef UartChannel
                 elseif tmp == obj.headerBytes(1)
                     % Potential restart
                     index = 2;
-                    fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
+%                     fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
                     miss_count = 0;
                 else
                     % Reset
                     index = 1;
-                    fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
+%                     fprintf("[!] Reset header counter after %d misses, c = %c, %x\n", miss_count, tmp, tmp);
                     miss_count = 0;
                 end
             end

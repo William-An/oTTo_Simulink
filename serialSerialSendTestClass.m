@@ -12,15 +12,15 @@ speed = 0;
 flush(uart.port);
 % TODO Uart receiver Only heard the first few packets after uart object
 % created, causing issue
-kp = 20;
+kp = 5;
 t = 0;
 while true
     % Create packet instance
-    speed = mod(speed + 10, 720);
+%     speed = mod(speed + 10, 720);
     receiveData = SensorPacket();
     receiveData = uart.read(receiveData);
     if uart.port.NumBytesAvailable > 512
-    %     fprintf("Flushing uart with %d bytes\n", uart.port.NumBytesAvailable);
+%         fprintf("Flushing uart with %d bytes\n", uart.port.NumBytesAvailable);
         flush(uart.port, "input");
     end
 
